@@ -1,3 +1,11 @@
+"""
+Functions to complete the Sieve of Eratosthenes and how many bills are needed to represent an amount.
+Duncan Keen
+A01185666
+"""
+import doctest
+
+
 def eratosthenes(number):
     prime_numbers = ""
     return prime_numbers
@@ -27,6 +35,7 @@ def cash_money(cdn):
 
 
 def main():
+    doctest.testmod()
     eratosthenes(30)
     cash_money(263.33)
 
