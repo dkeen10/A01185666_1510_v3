@@ -6,7 +6,7 @@ import doctest
 
 
 def statistics(number_list):
-    """Calculate the a list's length, min value, max value, average, and spread.
+    """Calculate the list's length, min value, max value, average, and spread.
 
     :param number_list: a list of numbers (integers or floats)
     :precondition: must be empty list or a list of numbers
