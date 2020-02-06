@@ -49,7 +49,6 @@ def statistics(number_list):
 
 
 def main():
-    #statistics([])
     doctest.testmod()
 
 
