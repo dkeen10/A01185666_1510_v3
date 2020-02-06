@@ -14,8 +14,10 @@ def eratosthenes(upper_bound):
     :postcondition: correctly calculates all prime numbers between zero and an upper bound
     :return: a list of prime numbers between zero and an upper bound
 
-    >>> eratosthenes(30)
-    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+    >>> eratosthenes(100)
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97]
+    >>> eratosthenes(31)
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]
     >>> eratosthenes(0)
     []
     >>> eratosthenes(1)
@@ -42,29 +44,36 @@ def cash_money(cdn):
     :postcondition: correctly calculates the least number of bills needed
     :return: least number of bills needed to represent the input value, shown in a list
 
-    >>> cash_money(263.33)
-    [2, 1, 0, 1, 0, 1, 1, 1, 0, 1, 2]
-    >>> cash_money(0.01)
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+    >>> cash_money(188.41)
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    >>> cash_money(100.57)
+    [1, 0, 0, 0, 0, 0, 0, 2, 0, 1, 2]
+    >>> cash_money(10.27)
+    [0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2]
+    >>> cash_money(1.05)
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0]
+    >>> cash_money(0.02)
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
     >>> cash_money(0)
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     """
     bills = [
-        (100, 1),
-        (50, 1),
-        (20, 1),
-        (10, 1),
-        (5, 1),
-        (2, 1),
-        (1, 1),
-        (0.25, 1),
-        (0.1, 1),
-        (0.05, 1),
-        (0.01, 1)
+        (100*100, 1),
+        (50*100, 1),
+        (20*100, 1),
+        (10*100, 1),
+        (5*100, 1),
+        (2*100, 1),
+        (1*100, 1),
+        (0.25*100, 1),
+        (0.1*100, 1),
+        (0.05*100, 1),
+        (0.01*100, 1)
     ]
+    cdn_100 = cdn*100      # I am multiplying all the values by 100 to avoid rounding errors.
     number_of_bills = []
     for (value, bill) in bills:
-        (factor, cdn) = divmod(cdn, value)
+        (factor, cdn_100) = divmod(cdn_100, value)
         number_of_each = int(bill*factor)
         number_of_bills.append(number_of_each)
     return number_of_bills
