@@ -1,5 +1,5 @@
 """
-Functions to complete the Sieve of Eratosthenes and how many bills are needed to represent an amount.
+Functions to complete the Sieve of Eratosthenes and the least number of bills needed to represent an amount.
 Duncan Keen
 A01185666
 """
