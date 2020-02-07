@@ -36,8 +36,7 @@ class TestCashMoney(TestCase):
     def test_cash_money_ten_dollars(self):
         self.assertEqual([0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0], cash_money(10))
 
-    def test_cash_money_ten_dollars_and_thirty_seven_cents(self):
-        """error"""
+    def test_cash_money_ten_dollars_and_twenty_seven_cents(self):
         self.assertEqual([0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2], cash_money(10.27))
 
     def test_cash_money_twenty_dollars(self):
@@ -50,9 +49,7 @@ class TestCashMoney(TestCase):
         self.assertEqual([1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], cash_money(100))
 
     def test_cash_money_one_hundred_dollars_and_fifty_seven_cents(self):
-        """error"""
         self.assertEqual([1, 0, 0, 0, 0, 0, 0, 2, 0, 1, 2], cash_money(100.57))
 
-    def test_cash_money_one_hundred_eighty_seven_dollars_and_forty_one_cents(self):
-        """error"""
+    def test_cash_money_one_hundred_eighty_eight_dollars_and_forty_one_cents(self):
         self.assertEqual([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], cash_money(188.41))

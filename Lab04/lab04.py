@@ -11,7 +11,7 @@ def eratosthenes(upper_bound):
 
     :param upper_bound: a positive integer
     :precondition: upper_bound must be a positive integer.
-    :postcondition: correctly calculates all prime numbers between zero and an upper bound
+    :postcondition: correctly calculates all prime numbers between zero and the upper bound
     :return: a list of prime numbers between zero and an upper bound
 
     >>> eratosthenes(100)
@@ -81,8 +81,6 @@ def cash_money(cdn):
 
 def main():
     doctest.testmod()
-    eratosthenes(30)
-    cash_money(263.33)
 
 
 if __name__ == "__main__":
