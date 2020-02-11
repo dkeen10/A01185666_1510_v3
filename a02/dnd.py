@@ -106,7 +106,6 @@ def create_character(syllables):
 #
 #
 #     #values method (can be useful to invert dictionaries)
-#     for
 
 
 def print_character(character):
