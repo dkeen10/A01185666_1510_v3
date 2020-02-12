@@ -192,37 +192,37 @@ def combat_round(opponent_one, opponent_two):
         defender = opponent_one
 
     if roll_to_hit(attacker):
-        alive = defender["HP"][1] - roll_for_damage(attacker)
-        if alive <= 0:
+        defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)
+        if defender["HP"][1] <= 0:
             print(f"{defender['Name']} has died!")
         return defender["HP"][1]
     if defender["HP"][1] > 0:
         if roll_to_hit(defender):
             roll_for_damage(defender)
-            alive = attacker["HP"][1] - roll_for_damage(defender)
-            if alive <= 0:
+            attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
+            if attacker["HP"][1] <= 0:
                 print(f"{attacker['Name']} has died!")
             return attacker["HP"][1]
 
 
     # i = roll_for_initiative()
-    # alive = True
-    # while alive:
+    # defender["HP"][1] = True
+    # while defender["HP"][1]:
     #     if i % 2 == 1:
     #         roll_to_hit(opponent_one.key(6))
     #         if roll_to_hit(opponent_one.key(6)):
-    #             alive = opponent_two.key(11) - roll_for_damage(opponent_one)
-    #             if alive <= 0:
+    #             defender["HP"][1] = opponent_two.key(11) - roll_for_damage(opponent_one)
+    #             if defender["HP"][1] <= 0:
     #                 print(f"{opponent_two.key(0)} has died!")
-    #                 alive = False
+    #                 defender["HP"][1] = False
     #         i += 1
     #     if i % 2 == 0:
     #         roll_to_hit(opponent_two.key(6))
     #         if roll_to_hit(opponent_two.key(6)):
-    #             alive = opponent_one.key(11) - roll_for_damage(opponent_two)
-    #             if alive <= 0:
+    #             defender["HP"][1] = opponent_one.key(11) - roll_for_damage(opponent_two)
+    #             if defender["HP"][1] <= 0:
     #                 print(f"{opponent_one} has died!")
-    #                 alive = False
+    #                 defender["HP"][1] = False
     #         i += 1
 # 1 combat round -> p1 hits, p2 hits, or p1 hits, p2 misses, or p1,
 # could assign opponent to victim, attacker
