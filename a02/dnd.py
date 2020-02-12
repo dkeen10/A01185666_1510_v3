@@ -1,6 +1,8 @@
 import doctest
 import random
 from random import randint
+import itertools
+
 
 
 def roll_die(number_of_rolls, number_of_sides):
@@ -113,13 +115,35 @@ def create_character(syllables):
 
 
 def print_character(character):
-    print(character)
+    print(r"                    ___====-_  _-====___                   ")
+    print(r"              _--^^^#####//      \\#####^^^--_           ")
+    print(r"           _-^##########// (    ) \\##########^-_           ")
+    print(r"          -############//  |\^^/|  \\############-        ")
+    print(r"        _/############//   (@::@)   \\############\_     ")
+    print(r"       /#############((     \\//     ))#############\       ")
+    print(r"      -###############\\    (oo)    //###############-         ")
+    print(r"     -#################\\  / VV \  //#################-       ")
+    print(r"    -###################\\/      \//###################-     ")
+    print(r"    #/|##########/\######(   /\   )######/\##########|\#_       ")
+    print(r"   |/ |#/\#/\#/\/  \#/\##\  |  |  /##/\#/  \/\#/\#/\#| \|       ")
+    print(r"   `  |/  V  V  `   V  \#\| |  | |/#/  V   '  V  V  \|  '       ")
+    print(r"      `   `  `      `   / | |  | | \   '      '  '   '         ")
+    print(r"                       (  | |  | |  )                       ")
+    print(r"                      __\ | |  | | /__                     ")
+    print(r"                     (vvv(VVV)(VVV)vvv)                       ")
+
+    print("\nA new challenge has arrived, eager to face the Dragonlord! \n")
+    for key in character.keys():
+        print(key, character[key])
+#stylize, dont use a dictionary
+# enter dictionary, extract inforamtion print it in a pretty way, use ascii art or whatever
 
 
 def choose_inventory(character):
-    print("\nWelcome to Olgierd's!")
+    print("\nIf you want to beat the Dragonlord, first you need some gear. Visit Olgierd's shop.")
+    print("\n\nWelcome to Olgierd's!")
     print("\nWhat would you like to buy?\n")
-    inventory = ["sword", "dagger", "bow", "wand of extend"]
+    inventory = ["sword", "dagger", "bow", "potion of fire resistance"]
     item_number = 1
     while item_number > 0:
         for i, item in enumerate(inventory, 1):
@@ -131,6 +155,7 @@ def choose_inventory(character):
         del inventory[item_number - 1]
         character["Inventory"].append(item_choice)
         print(item_choice)
+# could add a while loop if input outside of range of items
 
 
 def roll_for_initiative():
@@ -141,9 +166,9 @@ def roll_for_initiative():
         initiative1 = roll_die(1, 20)
         initiative2 = roll_die(1, 20)
     if initiative1 > initiative2:
-        return 1
+        return True
     else:
-        return 0
+        return False
 
 
 def roll_for_damage(character):
@@ -156,44 +181,66 @@ def roll_for_damage(character):
         damage = roll_die(1, 6)
     else:
         damage = roll_die(1, 12)
-    print(f"{character_for_damage} dealt {damage} damage!")
+    print(character_for_damage["Name"] + f" dealt {damage} damage!")
     return damage
 
 
 def roll_to_hit(character):
     character_to_hit = character
     hit_roll = roll_die(1, 20)
-    if hit_roll >= character("dexterity"):
-        print(f"{character_to_hit.key(1)} has hit!")
+    if hit_roll >= character_to_hit["dexterity"]:
+        print(character_to_hit["Name"] + " has hit!")
         return True
     else:
-        print(f"{character_to_hit.key(1)} has missed!")
+        print(character_to_hit["Name"] + " missed!")
         return False
 
 
 def combat_round(opponent_one, opponent_two):
-    i = roll_for_initiative()
-    alive = True
-    while alive:
-        if i % 2 == 1:
-            roll_to_hit(opponent_one)
-            if roll_to_hit():
-                alive = opponent_two.key(11) - roll_for_damage(opponent_one)
-                if alive <=0:
-                    print(f"{opponent_two} has died!")
-            i += 1
-        if i % 2 == 0:
-            roll_to_hit(opponent_two)
-            if roll_to_hit():
-                alive = opponent_one.key(11) - roll_for_damage(opponent_two)
-                if alive <= 0:
-                    print(f"{opponent_one} has died!")
-            i += 1
+    if roll_for_initiative():
+        attacker = opponent_one
+        defender = opponent_two
+    else:
+        attacker = opponent_two
+        defender = opponent_one
+
+    if roll_to_hit(attacker):
+        alive = defender["HP"][1] - roll_for_damage(attacker)
+        if alive <= 0:
+            print(f"{defender['Name']} has died!")
+
+    if defender["HP"][1] > 0:
+        if roll_to_hit(defender):
+            roll_for_damage(defender)
+            alive = attacker["HP"][1] - roll_for_damage(defender)
+            if alive <= 0:
+                print(f"{attacker['Name']} has died!")
 
 
-
-
-#roll_to_hit(initiative character)
+    # i = roll_for_initiative()
+    # alive = True
+    # while alive:
+    #     if i % 2 == 1:
+    #         roll_to_hit(opponent_one.key(6))
+    #         if roll_to_hit(opponent_one.key(6)):
+    #             alive = opponent_two.key(11) - roll_for_damage(opponent_one)
+    #             if alive <= 0:
+    #                 print(f"{opponent_two.key(0)} has died!")
+    #                 alive = False
+    #         i += 1
+    #     if i % 2 == 0:
+    #         roll_to_hit(opponent_two.key(6))
+    #         if roll_to_hit(opponent_two.key(6)):
+    #             alive = opponent_one.key(11) - roll_for_damage(opponent_two)
+    #             if alive <= 0:
+    #                 print(f"{opponent_one} has died!")
+    #                 alive = False
+    #         i += 1
+# 1 combat round -> p1 hits, p2 hits, or p1 hits, p2 misses, or p1,
+# could assign opponent to victim, attacker
+# if victim hasn't died, they get a chance to retaliate
+# while opponent_one alive and opponent_two alive:
+#
 
 
 def main():
@@ -204,8 +251,11 @@ def main():
     print_character(main_character)
     choose_inventory(main_character)
     print(main_character)
-    villain = {'Name': 'tasy', 'class': 'barbarian', 'race': 'dragonborn', 'Inventory': [], 'Experience': 0, 'strength': 12, 'dexterity': 10, 'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8, 'HP': [7, 7]}
-    combat_round(main_character, villain)
+    villain = {'Name': 'tasy', 'class': 'barbarian', 'race': 'dragonborn', 'Inventory': [], 'Experience': 0,
+               'strength': 12, 'dexterity': 10, 'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8,
+               'HP': [7, 7]}
+    while main_character["HP"][1] > 0 and villain["HP"][1] > 0:
+        combat_round(main_character, villain)
 
 
 if __name__ == "__main__":
