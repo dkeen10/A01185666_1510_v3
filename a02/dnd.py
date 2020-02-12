@@ -42,6 +42,7 @@ def generate_name(syllables):
 def select_class():
     roles = ["fighter", "paladin", "cleric", "monk", "barbarian", "rogue", "ranger", "bard", "druid", "wizard",
              "warlock", "sorcerer", ]
+    print("\nClasses:")
     for i, role in enumerate(roles, 1):
         print("%d: %s" % (i, role))
     role_number = int(input("Please select a class by choosing a number: (ex. if you want fighter, type 1)"))
@@ -51,6 +52,7 @@ def select_class():
 
 def select_race():
     races = ["human", "half-elf", "elf", "half-orc", "gnome", "halfling", "dwarf", "tiefling", "dragonborn"]
+    print("\nRaces:")
     for i, race in enumerate(races, 1):
         print("%d: %s" % (i, race))
     race_number = int(input("Please select a race by choosing a number: (ex. if you want human, type 1)"))
@@ -59,7 +61,7 @@ def select_race():
 
 
 def create_character(syllables):
-    if syllables > 1:
+    if syllables >= 1:
         inventory = []
         experience = 0
 
@@ -78,21 +80,23 @@ def create_character(syllables):
 
         if character["class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
             max_hp = roll_die(1, 8)
-            character["HP"] = [max_hp, max_hp]
+            current_hp = max_hp
+            character["HP"] = [max_hp, current_hp]
         elif character["class"] in {"fighter", "ranger", "paladin"}:
             max_hp = roll_die(1, 10)
-            character["HP"] = [max_hp, max_hp]
+            current_hp = max_hp
+            character["HP"] = [max_hp, current_hp]
         elif character["class"] in {"sorcerer", "wizard"}:
             max_hp = roll_die(1, 6)
-            character["HP"] = [max_hp, max_hp]
+            current_hp = max_hp
+            character["HP"] = [max_hp, current_hp]
         else:
             max_hp = roll_die(1, 12)
-            character["HP"] = [max_hp, max_hp]
-
-        print(character)
+            current_hp = max_hp
+            character["HP"] = [max_hp, current_hp]
         return character
     else:
-        print("")
+        print("syllables must be a positive integer.")
         return None
 
 #
@@ -112,22 +116,96 @@ def print_character(character):
     print(character)
 
 
-def choose_inventory():
-    print("Welcome to Olgierd's!")
-    print("")
+def choose_inventory(character):
+    print("\nWelcome to Olgierd's!")
+    print("\nWhat would you like to buy?\n")
     inventory = ["sword", "dagger", "bow", "wand of extend"]
+    item_number = 1
+    while item_number > 0:
+        for i, item in enumerate(inventory, 1):
+            print("%d: %s" % (i, item))
+        item_number = int(input("Which item would you like to buy? (-1 to finish)"))
+        if item_number == -1:
+            break
+        item_choice = inventory[item_number - 1]
+        del inventory[item_number - 1]
+        character["Inventory"].append(item_choice)
+        print(item_choice)
 
-    for i, item in enumerate(inventory, 1):
-        print("%d: %s" % (i, item))
-    item_number = int(input("Which item would you like to buy? (-1 to finish)"))
-    item_choice = inventory[item_number - 1]
-    print(item_choice)
-    return item_choice
+
+def roll_for_initiative():
+    initiative1 = 0
+    initiative2 = 0
+
+    while initiative1 == initiative2:
+        initiative1 = roll_die(1, 20)
+        initiative2 = roll_die(1, 20)
+    if initiative1 > initiative2:
+        return 1
+    else:
+        return 0
+
+
+def roll_for_damage(character):
+    character_for_damage = character
+    if character_for_damage["class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
+        damage = roll_die(1, 8)
+    elif character_for_damage["class"] in {"fighter", "ranger", "paladin"}:
+        damage = roll_die(1, 10)
+    elif character_for_damage["class"] in {"sorcerer", "wizard"}:
+        damage = roll_die(1, 6)
+    else:
+        damage = roll_die(1, 12)
+    print(f"{character_for_damage} dealt {damage} damage!")
+    return damage
+
+
+def roll_to_hit(character):
+    character_to_hit = character
+    hit_roll = roll_die(1, 20)
+    if hit_roll >= character("dexterity"):
+        print(f"{character_to_hit.key(1)} has hit!")
+        return True
+    else:
+        print(f"{character_to_hit.key(1)} has missed!")
+        return False
+
+
+def combat_round(opponent_one, opponent_two):
+    i = roll_for_initiative()
+    alive = True
+    while alive:
+        if i % 2 == 1:
+            roll_to_hit(opponent_one)
+            if roll_to_hit():
+                alive = opponent_two.key(11) - roll_for_damage(opponent_one)
+                if alive <=0:
+                    print(f"{opponent_two} has died!")
+            i += 1
+        if i % 2 == 0:
+            roll_to_hit(opponent_two)
+            if roll_to_hit():
+                alive = opponent_one.key(11) - roll_for_damage(opponent_two)
+                if alive <= 0:
+                    print(f"{opponent_one} has died!")
+            i += 1
+
+
+
+
+#roll_to_hit(initiative character)
 
 
 def main():
     # doctest.testmod()
-    create_character(2)
+    print("\nGreetings Traveller!\n")
+    number_of_syllables = int(input("How many syllables is your name?"))
+    main_character = create_character(number_of_syllables)
+    print_character(main_character)
+    choose_inventory(main_character)
+    print(main_character)
+    villain = {'Name': 'tasy', 'class': 'barbarian', 'race': 'dragonborn', 'Inventory': [], 'Experience': 0, 'strength': 12, 'dexterity': 10, 'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8, 'HP': [7, 7]}
+    combat_round(main_character, villain)
 
 
 if __name__ == "__main__":
