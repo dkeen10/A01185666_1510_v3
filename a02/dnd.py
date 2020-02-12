@@ -101,20 +101,9 @@ def create_character(syllables):
         print("syllables must be a positive integer.")
         return None
 
-#
-#     #items method
-#     for attribute, value in character_stats.items():
-#         print(attribute, value)
-#
-#     #keys method (can also omit the .keys since it is the default search)
-#     for key in character_stats.keys():
-#         print(key, character_stats[key])
-#
-#
-#     #values method (can be useful to invert dictionaries)
-
 
 def print_character(character):
+    print("\n")
     print(r"                    ___====-_  _-====___                   ")
     print(r"              _--^^^#####//      \\#####^^^--_           ")
     print(r"           _-^##########// (    ) \\##########^-_           ")
@@ -132,11 +121,9 @@ def print_character(character):
     print(r"                      __\ | |  | | /__                     ")
     print(r"                     (vvv(VVV)(VVV)vvv)                       ")
 
-    print("\nA new challenge has arrived, eager to face the Dragonlord! \n")
+    print("\nA new challenger has arrived, eager to face the Dragonlord! \n")
     for key in character.keys():
         print(key, character[key])
-#stylize, dont use a dictionary
-# enter dictionary, extract inforamtion print it in a pretty way, use ascii art or whatever
 
 
 def choose_inventory(character):
@@ -208,13 +195,14 @@ def combat_round(opponent_one, opponent_two):
         alive = defender["HP"][1] - roll_for_damage(attacker)
         if alive <= 0:
             print(f"{defender['Name']} has died!")
-
+        return defender["HP"][1]
     if defender["HP"][1] > 0:
         if roll_to_hit(defender):
             roll_for_damage(defender)
             alive = attacker["HP"][1] - roll_for_damage(defender)
             if alive <= 0:
                 print(f"{attacker['Name']} has died!")
+            return attacker["HP"][1]
 
 
     # i = roll_for_initiative()
@@ -251,11 +239,19 @@ def main():
     print_character(main_character)
     choose_inventory(main_character)
     print(main_character)
-    villain = {'Name': 'tasy', 'class': 'barbarian', 'race': 'dragonborn', 'Inventory': [], 'Experience': 0,
-               'strength': 12, 'dexterity': 10, 'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8,
+    villain = {'Name': 'miraak', 'class': 'barbarian', 'race': 'dragonborn',
+               'Inventory': ["Miraak's Staff", "Miraak's Sword"], 'Experience': 100, 'strength': 12, 'dexterity': 10,
+               'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8,
                'HP': [7, 7]}
-    while main_character["HP"][1] > 0 and villain["HP"][1] > 0:
-        combat_round(main_character, villain)
+    print("\nOh no! One of the Dragonlord's lieutenants has appeared. You must defeat him.\n")
+    for key in villain.keys():
+        print(key, villain[key])
+
+    while True:
+        i = input("Press enter to begin combat... ")
+        if not i:
+            while main_character["HP"][1] > 0 and villain["HP"][1] > 0:
+                combat_round(main_character, villain)
 
 
 if __name__ == "__main__":
