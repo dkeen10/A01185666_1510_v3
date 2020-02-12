@@ -196,7 +196,7 @@ def combat_round(opponent_one, opponent_two):
         if defender["HP"][1] <= 0:
             print(f"{defender['Name']} has died!")
         return defender["HP"][1]
-    if defender["HP"][1] > 0:
+    elif defender["HP"][1] > 0:
         if roll_to_hit(defender):
             roll_for_damage(defender)
             attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
