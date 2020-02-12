@@ -1,11 +1,19 @@
 import doctest
 import random
 from random import randint
-import itertools
-
+# import itertools
 
 
 def roll_die(number_of_rolls, number_of_sides):
+    """Simulate rolling an any-sided die any number of times.
+
+    :param number_of_rolls:
+    :param number_of_sides:
+    :precondition:
+    :postcondition:
+    :return:
+
+    """
     i = 1
     dice_roll = 0
     while i <= number_of_rolls:
@@ -15,23 +23,49 @@ def roll_die(number_of_rolls, number_of_sides):
 
 
 def generate_vowel():
+    """Generate a random vowel.
+
+    :precondition:
+    :postcondition:
+    :return: a random vowel
+    """
     vowels = ["a", "e", "i", "o", "u", "y"]
     vowel = random.choice(vowels)
     return vowel
 
 
 def generate_consonant():
-    consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"]
+    """Generate a random consonant.
+
+    :precondition:
+    :postcondition:
+    :return:
+    """
+    consonants = ["b", "c", "d", "f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y",
+                  "z"]
     consonant = random.choice(consonants)
     return consonant
 
 
 def generate_syllable():
+    """Combine a random consonant and a random vowel into a consonant-vowel pair.
+
+    :precondition:
+    :postcondition:
+    :return:
+    """
     syllable = generate_consonant() + generate_vowel()
     return syllable
 
 
 def generate_name(syllables):
+    """Generate a random name.
+
+    :param syllables:
+    :precondition:
+    :postcondition:
+    :return:
+    """
     name = ""
     if syllables > 1:
         for i in range(syllables):
@@ -42,6 +76,13 @@ def generate_name(syllables):
 
 
 def select_class():
+    """Prompt user to select a class from a list.
+
+    :precondition:
+    :postcondition:
+    :return:
+
+    """
     roles = ["fighter", "paladin", "cleric", "monk", "barbarian", "rogue", "ranger", "bard", "druid", "wizard",
              "warlock", "sorcerer", ]
     print("\nClasses:")
@@ -53,6 +94,12 @@ def select_class():
 
 
 def select_race():
+    """Prompt user to select a race from a list.
+
+    :precondition:
+    :postcondition:
+    :return:
+    """
     races = ["human", "half-elf", "elf", "half-orc", "gnome", "halfling", "dwarf", "tiefling", "dragonborn"]
     print("\nRaces:")
     for i, race in enumerate(races, 1):
@@ -63,6 +110,13 @@ def select_race():
 
 
 def create_character(syllables):
+    """Create a character.
+
+    :param syllables: a positive non-zero integer
+    :precondition:
+    :postcondition:
+    :return:
+    """
     if syllables >= 1:
         inventory = []
         experience = 0
@@ -103,6 +157,11 @@ def create_character(syllables):
 
 
 def print_character(character):
+    """Print a stylized text showing the user their created character.
+
+    :precondition:
+    :postcondition:
+    """
     print("\n")
     print(r"                    ___====-_  _-====___                   ")
     print(r"              _--^^^#####//      \\#####^^^--_           ")
@@ -127,6 +186,13 @@ def print_character(character):
 
 
 def choose_inventory(character):
+    """Prompt user to choose items for their character's inventory.
+
+    :param character:
+    :precondition:
+    :postcondition:
+    :return:
+    """
     print("\nIf you want to beat the Dragonlord, first you need some gear. Visit Olgierd's shop.")
     print("\n\nWelcome to Olgierd's!")
     print("\nWhat would you like to buy?\n")
@@ -146,6 +212,12 @@ def choose_inventory(character):
 
 
 def roll_for_initiative():
+    """Roll for who attacks first in a round of combat.
+
+    :precondition:
+    :postcondition:
+    :return:
+    """
     initiative1 = 0
     initiative2 = 0
 
@@ -159,6 +231,12 @@ def roll_for_initiative():
 
 
 def roll_for_damage(character):
+    """Roll for damage dealt.
+
+    :precondition:
+    :postcondition:
+    :return:
+    """
     character_for_damage = character
     if character_for_damage["class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
         damage = roll_die(1, 8)
@@ -173,6 +251,12 @@ def roll_for_damage(character):
 
 
 def roll_to_hit(character):
+    """Roll to hit.
+
+    :precondition:
+    :postcondition:
+    :return:
+    """
     character_to_hit = character
     hit_roll = roll_die(1, 20)
     if hit_roll >= character_to_hit["dexterity"]:
@@ -184,6 +268,14 @@ def roll_to_hit(character):
 
 
 def combat_round(opponent_one, opponent_two):
+    """Simulate one round of combat.
+
+    :param opponent_one:
+    :param opponent_two:
+    :precondition:
+    :postcondition:
+    :return:
+    """
     if roll_for_initiative():
         attacker = opponent_one
         defender = opponent_two
@@ -198,47 +290,22 @@ def combat_round(opponent_one, opponent_two):
         return defender["HP"][1]
     elif defender["HP"][1] > 0:
         if roll_to_hit(defender):
-            roll_for_damage(defender)
             attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
             if attacker["HP"][1] <= 0:
                 print(f"{attacker['Name']} has died!")
             return attacker["HP"][1]
 
 
-    # i = roll_for_initiative()
-    # defender["HP"][1] = True
-    # while defender["HP"][1]:
-    #     if i % 2 == 1:
-    #         roll_to_hit(opponent_one.key(6))
-    #         if roll_to_hit(opponent_one.key(6)):
-    #             defender["HP"][1] = opponent_two.key(11) - roll_for_damage(opponent_one)
-    #             if defender["HP"][1] <= 0:
-    #                 print(f"{opponent_two.key(0)} has died!")
-    #                 defender["HP"][1] = False
-    #         i += 1
-    #     if i % 2 == 0:
-    #         roll_to_hit(opponent_two.key(6))
-    #         if roll_to_hit(opponent_two.key(6)):
-    #             defender["HP"][1] = opponent_one.key(11) - roll_for_damage(opponent_two)
-    #             if defender["HP"][1] <= 0:
-    #                 print(f"{opponent_one} has died!")
-    #                 defender["HP"][1] = False
-    #         i += 1
-# 1 combat round -> p1 hits, p2 hits, or p1 hits, p2 misses, or p1,
-# could assign opponent to victim, attacker
-# if victim hasn't died, they get a chance to retaliate
-# while opponent_one alive and opponent_two alive:
-#
-
-
 def main():
+    """Run the functions in this module.
+
+    """
     # doctest.testmod()
     print("\nGreetings Traveller!\n")
     number_of_syllables = int(input("How many syllables is your name?"))
     main_character = create_character(number_of_syllables)
     print_character(main_character)
     choose_inventory(main_character)
-    print(main_character)
     villain = {'Name': 'miraak', 'class': 'barbarian', 'race': 'dragonborn',
                'Inventory': ["Miraak's Staff", "Miraak's Sword"], 'Experience': 100, 'strength': 12, 'dexterity': 10,
                'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8,
@@ -256,9 +323,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# # initiative helper function
-# # roll_to_hit function
-# # roll_for_damage function
-# # set life = False after life <0
-# # enumerate for items list in store (lets you do 1: sword) (looks at slides)
