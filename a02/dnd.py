@@ -5,7 +5,7 @@ from random import randint
 
 
 def roll_die(number_of_rolls, number_of_sides):
-    """Simulate rolling an any-sided die any number of times.
+    """Roll a die with the specified number of sides the specified number of times.
 
     :param number_of_rolls:
     :param number_of_sides:
@@ -14,12 +14,13 @@ def roll_die(number_of_rolls, number_of_sides):
     :return:
 
     """
-    i = 1
-    dice_roll = 0
-    while i <= number_of_rolls:
-        dice_roll += randint(1, number_of_sides)
-        i += 1
-    return dice_roll
+    # i = 1
+    # dice_roll = 0
+    # while i <= number_of_rolls:
+    #     dice_roll += randint(1, number_of_sides)
+    #     i += 1
+    # return dice_roll
+    return random.randint(number_of_rolls, number_of_rolls * number_of_sides)
 
 
 def generate_vowel():
@@ -122,27 +123,27 @@ def create_character(syllables):
         experience = 0
 
         character = {}
-        character["Name"] = generate_name(2)
-        character["class"] = select_class()
-        character["race"] = select_race()
+        character["Name"] = generate_name(syllables)
+        character["Class"] = select_class()
+        character["Race"] = select_race()
         character["Inventory"] = inventory
         character["Experience"] = experience
-        character["strength"] = roll_die(3, 6)
-        character["dexterity"] = roll_die(3, 6)
-        character["constitution"] = roll_die(3, 6)
-        character["intelligence"] = roll_die(3, 6)
-        character["wisdom"] = roll_die(3, 6)
-        character["charisma"] = roll_die(3, 6)
+        character["Strength"] = roll_die(3, 6)
+        character["Dexterity"] = roll_die(3, 6)
+        character["Constitution"] = roll_die(3, 6)
+        character["Intelligence"] = roll_die(3, 6)
+        character["Wisdom"] = roll_die(3, 6)
+        character["Charisma"] = roll_die(3, 6)
 
-        if character["class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
+        if character["Class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
             max_hp = roll_die(1, 8)
             current_hp = max_hp
             character["HP"] = [max_hp, current_hp]
-        elif character["class"] in {"fighter", "ranger", "paladin"}:
+        elif character["Class"] in {"fighter", "ranger", "paladin"}:
             max_hp = roll_die(1, 10)
             current_hp = max_hp
             character["HP"] = [max_hp, current_hp]
-        elif character["class"] in {"sorcerer", "wizard"}:
+        elif character["Class"] in {"sorcerer", "wizard"}:
             max_hp = roll_die(1, 6)
             current_hp = max_hp
             character["HP"] = [max_hp, current_hp]
@@ -188,26 +189,37 @@ def print_character(character):
 def choose_inventory(character):
     """Prompt user to choose items for their character's inventory.
 
+    inside each function that needsof the unittest:
+    def TestFunction(self)
+        test_character with empty inventroy = {[name: "blab"; ...}
+        test_character with new inventory
+
+        choose item from store
+
+        self.assertequal(test_character, test_character with new inventroy)
+
     :param character:
     :precondition:
     :postcondition:
     :return:
     """
     print("\nIf you want to beat the Dragonlord, first you need some gear. Visit Olgierd's shop.")
-    print("\n\nWelcome to Olgierd's!")
-    print("\nWhat would you like to buy?\n")
+    print("\n\nWelcome to Olgierd's!\nHere's what I have for sale:")
+
     inventory = ["sword", "dagger", "bow", "potion of fire resistance"]
-    item_number = 1
-    while item_number > 0:
+
+    while True:
         for i, item in enumerate(inventory, 1):
             print("%d: %s" % (i, item))
         item_number = int(input("Which item would you like to buy? (-1 to finish)"))
-        if item_number == -1:
+        if ((len(inventory) < item_number) or (item_number == 0)) and (item_number != -1):
+            print("Your choice must be within the store's availability")
+        elif item_number == -1:
             break
-        item_choice = inventory[item_number - 1]
-        del inventory[item_number - 1]
-        character["Inventory"].append(item_choice)
-        print(item_choice)
+        else:
+            item_choice = inventory[item_number - 1]
+            character["Inventory"].append(item_choice)
+
 # could add a while loop if input outside of range of items
 
 
@@ -238,11 +250,11 @@ def roll_for_damage(character):
     :return:
     """
     character_for_damage = character
-    if character_for_damage["class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
+    if character_for_damage["Class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
         damage = roll_die(1, 8)
-    elif character_for_damage["class"] in {"fighter", "ranger", "paladin"}:
+    elif character_for_damage["Class"] in {"fighter", "ranger", "paladin"}:
         damage = roll_die(1, 10)
-    elif character_for_damage["class"] in {"sorcerer", "wizard"}:
+    elif character_for_damage["Class"] in {"sorcerer", "wizard"}:
         damage = roll_die(1, 6)
     else:
         damage = roll_die(1, 12)
@@ -259,7 +271,7 @@ def roll_to_hit(character):
     """
     character_to_hit = character
     hit_roll = roll_die(1, 20)
-    if hit_roll >= character_to_hit["dexterity"]:
+    if hit_roll >= character_to_hit["Dexterity"]:
         print(character_to_hit["Name"] + " has hit!")
         return True
     else:
@@ -279,16 +291,31 @@ def combat_round(opponent_one, opponent_two):
     if roll_for_initiative():
         attacker = opponent_one
         defender = opponent_two
+        print(f"{attacker['Name']} goes first! ")
     else:
         attacker = opponent_two
         defender = opponent_one
+        print(f"{attacker['Name']} goes first! ")
+
+    # if roll_to_hit(attacker):
+    #     defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)
+    #     if defender["HP"][1] <= 0:
+    #         print(f"{defender['Name']} has died!")
+    #     return defender["HP"][1]
+    # elif defender["HP"][1] > 0:
+    #     if roll_to_hit(defender):
+    #         attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
+    #         if attacker["HP"][1] <= 0:
+    #             print(f"{attacker['Name']} has died!")
+    #         return attacker["HP"][1]
 
     if roll_to_hit(attacker):
         defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)
         if defender["HP"][1] <= 0:
             print(f"{defender['Name']} has died!")
         return defender["HP"][1]
-    elif defender["HP"][1] > 0:
+    if defender["HP"][1] > 0:
+        print(f"{defender['Name']} retaliates! ")
         if roll_to_hit(defender):
             attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
             if attacker["HP"][1] <= 0:
@@ -306,19 +333,19 @@ def main():
     main_character = create_character(number_of_syllables)
     print_character(main_character)
     choose_inventory(main_character)
-    villain = {'Name': 'miraak', 'class': 'barbarian', 'race': 'dragonborn',
-               'Inventory': ["Miraak's Staff", "Miraak's Sword"], 'Experience': 100, 'strength': 12, 'dexterity': 10,
+    villain = {'Name': 'miraak', 'Class': 'barbarian', 'Race': 'dragonborn',
+               'Inventory': ["Miraak's Staff", "Miraak's Sword"], 'Experience': 100, 'Strength': 12, 'Dexterity': 10,
                'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8,
                'HP': [7, 7]}
     print("\nOh no! One of the Dragonlord's lieutenants has appeared. You must defeat him.\n")
     for key in villain.keys():
         print(key, villain[key])
 
-    while True:
-        i = input("Press enter to begin combat... ")
-        if not i:
-            while main_character["HP"][1] > 0 and villain["HP"][1] > 0:
-                combat_round(main_character, villain)
+    # while True:
+    #     i = input("Press enter to begin combat... ")
+    #     if not i:
+    #         while main_character["HP"][1] > 0 and villain["HP"][1] > 0:
+    combat_round(main_character, villain)
 
 
 if __name__ == "__main__":
