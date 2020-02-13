@@ -68,12 +68,12 @@ def generate_name(syllables):
     :return:
     """
     name = ""
-    if syllables > 1:
-        for i in range(syllables):
-            name += generate_syllable()
-        return name
-    else:
-        print("None")
+    # if syllables >= 1:
+    for i in range(syllables):
+        name += generate_syllable()
+    return name
+    # else:
+    #     print("None")
 
 
 def select_class():
@@ -118,7 +118,7 @@ def create_character(syllables):
     :postcondition:
     :return:
     """
-    if syllables >= 1:
+    if syllables > 0:
         inventory = []
         experience = 0
 
@@ -163,24 +163,6 @@ def print_character(character):
     :precondition:
     :postcondition:
     """
-    print("\n")
-    print(r"                    ___====-_  _-====___                   ")
-    print(r"              _--^^^#####//      \\#####^^^--_           ")
-    print(r"           _-^##########// (    ) \\##########^-_           ")
-    print(r"          -############//  |\^^/|  \\############-        ")
-    print(r"        _/############//   (@::@)   \\############\_     ")
-    print(r"       /#############((     \\//     ))#############\       ")
-    print(r"      -###############\\    (oo)    //###############-         ")
-    print(r"     -#################\\  / VV \  //#################-       ")
-    print(r"    -###################\\/      \//###################-     ")
-    print(r"    #/|##########/\######(   /\   )######/\##########|\#_       ")
-    print(r"   |/ |#/\#/\#/\/  \#/\##\  |  |  /##/\#/  \/\#/\#/\#| \|       ")
-    print(r"   `  |/  V  V  `   V  \#\| |  | |/#/  V   '  V  V  \|  '       ")
-    print(r"      `   `  `      `   / | |  | | \   '      '  '   '         ")
-    print(r"                       (  | |  | |  )                       ")
-    print(r"                      __\ | |  | | /__                     ")
-    print(r"                     (vvv(VVV)(VVV)vvv)                       ")
-
     print("\nA new challenger has arrived, eager to face the Dragonlord! \n")
     for key in character.keys():
         print(key, character[key])
@@ -331,12 +313,32 @@ def main():
     print("\nGreetings Traveller!\n")
     number_of_syllables = int(input("How many syllables is your name?"))
     main_character = create_character(number_of_syllables)
+    print("\n")
+    print(r"                    ___====-_  _-====___                   ")
+    print(r"              _--^^^#####//      \\#####^^^--_           ")
+    print(r"           _-^##########// (    ) \\##########^-_           ")
+    print(r"          -############//  |\^^/|  \\############-        ")
+    print(r"        _/############//   (@::@)   \\############\_     ")
+    print(r"       /#############((     \\//     ))#############\       ")
+    print(r"      -###############\\    (oo)    //###############-         ")
+    print(r"     -#################\\  / VV \  //#################-       ")
+    print(r"    -###################\\/      \//###################-     ")
+    print(r"    #/|##########/\######(   /\   )######/\##########|\#_       ")
+    print(r"   |/ |#/\#/\#/\/  \#/\##\  |  |  /##/\#/  \/\#/\#/\#| \|       ")
+    print(r"   `  |/  V  V  `   V  \#\| |  | |/#/  V   '  V  V  \|  '       ")
+    print(r"      `   `  `      `   / | |  | | \   '      '  '   '         ")
+    print(r"                       (  | |  | |  )                       ")
+    print(r"                      __\ | |  | | /__                     ")
+    print(r"                     (vvv(VVV)(VVV)vvv)                       ")
     print_character(main_character)
+    print(main_character)
     choose_inventory(main_character)
+    print_character(main_character)
     villain = {'Name': 'miraak', 'Class': 'barbarian', 'Race': 'dragonborn',
                'Inventory': ["Miraak's Staff", "Miraak's Sword"], 'Experience': 100, 'Strength': 12, 'Dexterity': 10,
                'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8,
                'HP': [7, 7]}
+    print(villain)
     print("\nOh no! One of the Dragonlord's lieutenants has appeared. You must defeat him.\n")
     for key in villain.keys():
         print(key, villain[key])
