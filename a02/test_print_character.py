@@ -8,9 +8,9 @@ from dnd import print_character
 class TestPrintCharacter(TestCase):
     @patch("sys.stdout", new_callable=io.StringIO)
     def test_print_character(self, mock_stdout):
-        print_character({'Name': 'quti', 'class': 'fighter', 'race': 'human', 'Inventory': [], 'Experience': 0,
-                         'strength': 9, 'dexterity': 14, 'constitution': 12, 'intelligence': 15, 'wisdom': 10,
-                         'charisma': 11, 'HP': [4, 4]})
-        expected = "Name lozy\nclass fighter\nrace human\nInventory []\nExperience 0\nstrength 12\ndexterity 4\n" \
-                   "constitution 14\nintelligence 7\nwisdom 7\ncharisma 13\nHP [7, 7]\n"
+        print_character({'Name': 'lozy', 'Class': 'fighter', 'Race': 'human', 'Inventory': [], 'Experience': 0,
+                         'Strength': 9, 'Dexterity': 14, 'Constitution': 12, 'Intelligence': 15, 'Wisdom': 10,
+                         'Charisma': 11, 'HP': [4, 4]})
+        expected = "Name lozy\nClass fighter\nRace human\nInventory []\nExperience 0\nStrength 9\nDexterity 14\n" \
+                   "Constitution 12\nIntelligence 15\nWisdom 10\nCharisma 11\nHP [4, 4]\n"
         self.assertEqual(mock_stdout.getvalue(), expected)

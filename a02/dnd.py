@@ -68,12 +68,10 @@ def generate_name(syllables):
     :return:
     """
     name = ""
-    # if syllables >= 1:
     for i in range(syllables):
         name += generate_syllable()
     return name
-    # else:
-    #     print("None")
+
 
 
 def select_class():
@@ -163,7 +161,6 @@ def print_character(character):
     :precondition:
     :postcondition:
     """
-    print("\nA new challenger has arrived, eager to face the Dragonlord! \n")
     for key in character.keys():
         print(key, character[key])
 
@@ -330,6 +327,7 @@ def main():
     print(r"                       (  | |  | |  )                       ")
     print(r"                      __\ | |  | | /__                     ")
     print(r"                     (vvv(VVV)(VVV)vvv)                       ")
+    print("\nA new challenger has arrived, eager to face the Dragonlord! \n")
     print_character(main_character)
     print(main_character)
     choose_inventory(main_character)
