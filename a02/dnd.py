@@ -68,10 +68,9 @@ def generate_name(syllables):
     :return:
     """
     name = ""
-    for i in range(syllables):
+    for i in range(int(syllables)):
         name += generate_syllable()
     return name
-
 
 
 def select_class():
@@ -116,41 +115,45 @@ def create_character(syllables):
     :postcondition:
     :return:
     """
-    if syllables > 0:
-        inventory = []
-        experience = 0
+    try:
+        if int(syllables) > 0:
+            inventory = []
+            experience = 0
 
-        character = {}
-        character["Name"] = generate_name(syllables)
-        character["Class"] = select_class()
-        character["Race"] = select_race()
-        character["Inventory"] = inventory
-        character["Experience"] = experience
-        character["Strength"] = roll_die(3, 6)
-        character["Dexterity"] = roll_die(3, 6)
-        character["Constitution"] = roll_die(3, 6)
-        character["Intelligence"] = roll_die(3, 6)
-        character["Wisdom"] = roll_die(3, 6)
-        character["Charisma"] = roll_die(3, 6)
+            character = {}
+            character["Name"] = generate_name(syllables)
+            character["Class"] = select_class()
+            character["Race"] = select_race()
+            character["Inventory"] = inventory
+            character["Experience"] = experience
+            character["Strength"] = roll_die(3, 6)
+            character["Dexterity"] = roll_die(3, 6)
+            character["Constitution"] = roll_die(3, 6)
+            character["Intelligence"] = roll_die(3, 6)
+            character["Wisdom"] = roll_die(3, 6)
+            character["Charisma"] = roll_die(3, 6)
 
-        if character["Class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
-            max_hp = roll_die(1, 8)
-            current_hp = max_hp
-            character["HP"] = [max_hp, current_hp]
-        elif character["Class"] in {"fighter", "ranger", "paladin"}:
-            max_hp = roll_die(1, 10)
-            current_hp = max_hp
-            character["HP"] = [max_hp, current_hp]
-        elif character["Class"] in {"sorcerer", "wizard"}:
-            max_hp = roll_die(1, 6)
-            current_hp = max_hp
-            character["HP"] = [max_hp, current_hp]
+            if character["Class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
+                max_hp = roll_die(1, 8)
+                current_hp = max_hp
+                character["HP"] = [max_hp, current_hp]
+            elif character["Class"] in {"fighter", "ranger", "paladin"}:
+                max_hp = roll_die(1, 10)
+                current_hp = max_hp
+                character["HP"] = [max_hp, current_hp]
+            elif character["Class"] in {"sorcerer", "wizard"}:
+                max_hp = roll_die(1, 6)
+                current_hp = max_hp
+                character["HP"] = [max_hp, current_hp]
+            else:
+                max_hp = roll_die(1, 12)
+                current_hp = max_hp
+                character["HP"] = [max_hp, current_hp]
+            return character
         else:
-            max_hp = roll_die(1, 12)
-            current_hp = max_hp
-            character["HP"] = [max_hp, current_hp]
-        return character
-    else:
+            print("syllables must be a positive integer.")
+            return None
+    except ValueError:
         print("syllables must be a positive integer.")
         return None
 
@@ -278,18 +281,6 @@ def combat_round(opponent_one, opponent_two):
         defender = opponent_one
         print(f"{attacker['Name']} goes first! ")
 
-    # if roll_to_hit(attacker):
-    #     defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)
-    #     if defender["HP"][1] <= 0:
-    #         print(f"{defender['Name']} has died!")
-    #     return defender["HP"][1]
-    # elif defender["HP"][1] > 0:
-    #     if roll_to_hit(defender):
-    #         attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
-    #         if attacker["HP"][1] <= 0:
-    #             print(f"{attacker['Name']} has died!")
-    #         return attacker["HP"][1]
-
     if roll_to_hit(attacker, defender):
         defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)
         if defender["HP"][1] <= 0:
@@ -311,7 +302,7 @@ def main():
     """
     # doctest.testmod()
     print("\nGreetings Traveller!\n")
-    number_of_syllables = int(input("How many syllables is your name?"))
+    number_of_syllables = input("How many syllables is your name?")
     main_character = create_character(number_of_syllables)
     print("\n")
     print(r"                    ___====-_  _-====___                   ")

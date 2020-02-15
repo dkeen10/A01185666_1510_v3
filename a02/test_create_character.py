@@ -1,5 +1,6 @@
 from unittest import TestCase
 from unittest.mock import patch
+import io
 
 from dnd import create_character, roll_die, generate_name, select_class, select_race
 
@@ -47,8 +48,22 @@ class TestCreateCharacter(TestCase):
                     'Dexterity': 13, 'Constitution': 6, 'Intelligence': 8, 'Wisdom': 18, 'Charisma': 9, 'HP': [3, 3]}
         self.assertEqual(actual, expected)
 
-    def test_create_character_no_syllables(self):
+
+    def test_create_character_no_syllables_return_value(self):
         actual = create_character(0)
         expected = None
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_create_character_input_negative_int_print_output(self, mock_stdout):
+        create_character(-1)
+        expected = "syllables must be a positive integer.\n"
+        actual = mock_stdout.getvalue()
+        self.assertEqual(expected, actual)
+
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_create_character_input_as_string_print_output(self, mock_stdout):
+        create_character("asd")
+        expected = "syllables must be a positive integer.\n"
+        actual = mock_stdout.getvalue()
+        self.assertEqual(expected, actual)
