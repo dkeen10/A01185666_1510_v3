@@ -336,11 +336,9 @@ def main():
                'Inventory': ["Miraak's Staff", "Miraak's Sword"], 'Experience': 100, 'Strength': 12, 'Dexterity': 10,
                'constitution': 10, 'intelligence': 11, 'wisdom': 9, 'charisma': 8,
                'HP': [7, 7]}
-    print(villain)
     print("\nOh no! One of the Dragonlord's lieutenants has appeared. You must defeat him.\n")
-    for key in villain.keys():
-        print(key, villain[key])
-
+    print_character(villain)
+    print("\nThe sounds of combat echo down the halls...\n")
     # while True:
     #     i = input("Press enter to begin combat... ")
     #     if not i:
