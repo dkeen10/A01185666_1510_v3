@@ -241,20 +241,22 @@ def roll_for_damage(character):
     return damage
 
 
-def roll_to_hit(character):
+def roll_to_hit(opponent_one, opponent_two):
     """Roll to hit.
 
     :precondition:
     :postcondition:
     :return:
     """
-    character_to_hit = character
+    character_doing_hit = opponent_one
+    character_to_hit = opponent_two
     hit_roll = roll_die(1, 20)
+
     if hit_roll >= character_to_hit["Dexterity"]:
-        print(character_to_hit["Name"] + " has hit!")
+        print(character_doing_hit["Name"] + " has hit!")
         return True
     else:
-        print(character_to_hit["Name"] + " missed!")
+        print(character_doing_hit["Name"] + " missed!")
         return False
 
 
@@ -288,18 +290,19 @@ def combat_round(opponent_one, opponent_two):
     #             print(f"{attacker['Name']} has died!")
     #         return attacker["HP"][1]
 
-    if roll_to_hit(attacker):
+    if roll_to_hit(attacker, defender):
         defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)
         if defender["HP"][1] <= 0:
             print(f"{defender['Name']} has died!")
-        return defender["HP"][1]
+
     if defender["HP"][1] > 0:
         print(f"{defender['Name']} retaliates! ")
-        if roll_to_hit(defender):
+        if roll_to_hit(defender, attacker):
             attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
             if attacker["HP"][1] <= 0:
                 print(f"{attacker['Name']} has died!")
-            return attacker["HP"][1]
+
+    return attacker["HP"][1], defender["HP"][1]
 
 
 def main():
