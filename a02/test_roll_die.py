@@ -30,14 +30,13 @@ class TestRollDie(TestCase):
             self.assertGreaterEqual(actual, 10)
             self.assertLessEqual(actual, 100)
 
-    @patch('random.randint', side_effect=[3])
+    @patch('random.randint', side_effect=[1])
     def test_roll_die_roll_once(self, mock_randint):
-        actual = roll_die(3, 3)
-        expected = 3
+        actual = roll_die(1, 1)
+        expected = 1
         self.assertEqual(expected, actual)
 
     @patch('random.randint', side_effect=[1, 1, 1])
-    # parameters are inverted: closest patch to the function is the first, and furthest is the last
     def test_roll_die_roll_three_times(self, mock_randint):
         actual = roll_die(3, 1)
         expected = 3

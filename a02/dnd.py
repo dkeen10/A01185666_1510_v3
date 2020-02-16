@@ -18,7 +18,6 @@ def roll_die(number_of_rolls, number_of_sides):
     :precondition: number_of_rolls and number_of_sides must be positive non-zero integers
     :postcondition: generates a random dice role of the correct sided die being rolled the correct number of times
     :return: a correctly generated sum of the dice roll as an integer
-
     """
     dice_roll = 0
     for i in range(0, number_of_rolls):
@@ -63,10 +62,10 @@ def generate_syllable():
     """Combine a random consonant and a random vowel into a consonant-vowel pair.
 
     Computational Thinking:
-    Decomposition:
-    Pattern Matching:
-    Abstraction:
-    Algorithms:
+    Decomposition: I used the generate syllable helper function to reduce repeated code. The generate syllable helper
+        function then uses the generate_consonant and generate_vowel helper functions to generate a syllable.
+    Algorithms: I used a for loop to populate an empty string with syllables consisting of consonant-vowel pairs up
+        to the specified number of syllables.
 
     :postcondition: correctly generates a consonant-vowel pair of a random consonant and a random vowel
     :return: a correctly generated consonant-vowel pair of a random consonant and a random vowel
@@ -105,9 +104,9 @@ def select_class():
         allow for the user to make a selection by typing in the integer relating to the class instead of having to type
         in the whole class name.
 
+    :precondition: this function will only work if user selects a number from the list
     :postcondition: the user has chosen a class
     :return: the user's chosen class
-
     """
     roles = ["fighter", "paladin", "cleric", "monk", "barbarian", "rogue", "ranger", "bard", "druid", "wizard",
              "warlock", "sorcerer", ]
@@ -130,6 +129,7 @@ def select_race():
         allow for the user to make a selection by typing in the integer relating to the class instead of having to type
         in the whole class name.
 
+    :precondition: this function will only work if user selects a number from the list
     :postcondition: the user has chosen a race
     :return: the user's chosen race
     """
@@ -159,12 +159,12 @@ def create_character(syllables):
     :postcondition: a correctly created character in
     :return: a correctly created character in, or None if syllables was in the incorrect form
     """
-    try:
+    try:    # create_character first tries this set of code.
         if int(syllables) > 0:
             inventory = []
             experience = 0
 
-            character = {}
+            character = {}     # i am purposefully not writing this as a dictionary literal so it has better readability
             character["Name"] = generate_name(syllables)
             character["Class"] = select_class()
             character["Race"] = select_race()
@@ -194,10 +194,10 @@ def create_character(syllables):
                 current_hp = max_hp
                 character["HP"] = [max_hp, current_hp]
             return character
-        else:
+        else:       # if syllables is a float or an integer less than or equal to zero:
             print("syllables must be a positive integer.")
             return None
-    except ValueError:
+    except ValueError:      # if the function gets a ValueError because of syllables' datatype, it instead does this:
         print("syllables must be a positive integer.")
         return None
 
@@ -257,7 +257,7 @@ def print_dragon():
 
 
 def print_character(character):
-    """Print a stylized text showing the user their created character.
+    """Print stylized text showing the user their created character.
 
     Computational Thinking:
     Algorithms: I used the .keys method to print the character information in a more user friendly way.
@@ -271,32 +271,21 @@ def print_character(character):
                     'HP': [3, 3]})
     <=+=+=+=+=+=+=+=+=>
     Name ba
-    <=+=+=+=+=+=+=+=+=>
     Class barbarian
-    <=+=+=+=+=+=+=+=+=>
     Race human
-    <=+=+=+=+=+=+=+=+=>
     Inventory []
-    <=+=+=+=+=+=+=+=+=>
     Experience 0
-    <=+=+=+=+=+=+=+=+=>
     Strength 14
-    <=+=+=+=+=+=+=+=+=>
     Dexterity 13
-    <=+=+=+=+=+=+=+=+=>
     Constitution 6
-    <=+=+=+=+=+=+=+=+=>
     Intelligence 8
-    <=+=+=+=+=+=+=+=+=>
     Wisdom 18
-    <=+=+=+=+=+=+=+=+=>
     Charisma 9
-    <=+=+=+=+=+=+=+=+=>
     HP [3, 3]
     <=+=+=+=+=+=+=+=+=>
     """
+    print("<=+=+=+=+=+=+=+=+=>")
     for key in character.keys():
-        print("<=+=+=+=+=+=+=+=+=>")
         print(key, character[key])
     print("<=+=+=+=+=+=+=+=+=>")
 
@@ -331,10 +320,10 @@ def choose_inventory(character):
         item_number = int(input("Which item would you like to buy? (-1 to finish)"))
         if ((len(inventory) < item_number) or (item_number == 0)) and (item_number != -1):
             print("Your choice must be within the store's availability")
-        elif item_number == -1:
+        elif item_number == -1:     # exits the shop
             break
         else:
-            item_choice = inventory[item_number - 1]
+            item_choice = inventory[item_number - 1]      # modifies the character's inventory with the user's purchases
             character["Inventory"].append(item_choice)
 
 
@@ -351,7 +340,7 @@ def roll_for_initiative():
     initiative1 = 0
     initiative2 = 0
 
-    while initiative1 == initiative2:
+    while initiative1 == initiative2:   # the function continues until there is no draw.
         initiative1 = roll_die(1, 20)
         initiative2 = roll_die(1, 20)
     if initiative1 > initiative2:
@@ -403,7 +392,7 @@ def roll_to_hit(opponent_one, opponent_two):
         Both scenarios also include printing a relevant message.
     :return: True if the character doing the hit has hit, else returns False if they missed
     """
-    character_doing_hit = opponent_one
+    character_doing_hit = opponent_one      # assigning parameters to local variables
     character_to_hit = opponent_two
     hit_roll = roll_die(1, 20)
 
@@ -442,7 +431,7 @@ def combat_round(opponent_one, opponent_two):
     :return: each character's current HP
     """
     if roll_for_initiative():
-        attacker = opponent_one
+        attacker = opponent_one    # assigning the character that rolled higher in roll_for_initiative to the attacker
         defender = opponent_two
         print(f"{attacker['Name']} goes first! ")
     else:
@@ -450,15 +439,15 @@ def combat_round(opponent_one, opponent_two):
         defender = opponent_one
         print(f"{attacker['Name']} goes first! ")
 
-    if roll_to_hit(attacker, defender):
-        defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)
+    if roll_to_hit(attacker, defender):     # if the attacker hits, they deal damage to the defender
+        defender["HP"][1] = defender["HP"][1] - roll_for_damage(attacker)   # modifying the defender's current HP
         if defender["HP"][1] <= 0:
             print(f"{defender['Name']} has died!")
 
     if defender["HP"][1] > 0:   # if character who attacks second is still alive, they get a chance to retaliate
         print(f"{defender['Name']} retaliates! ")
-        if roll_to_hit(defender, attacker):
-            attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)
+        if roll_to_hit(defender, attacker):     # if the defender hits, they deal damage to the attacker
+            attacker["HP"][1] = attacker["HP"][1] - roll_for_damage(defender)  # modifying the attacker's current HP
             if attacker["HP"][1] <= 0:
                 print(f"{attacker['Name']} has died!")
 
@@ -467,13 +456,14 @@ def combat_round(opponent_one, opponent_two):
 
 def main():
     """Run the functions in this module.
-
     """
     doctest.testmod()
     print("\nGreetings Traveller!\n")
     number_of_syllables = input("How many syllables is your name?")
     main_character = create_character(number_of_syllables)
     print_dragon()
+    print("\nA new challenger approaches, eager to face the Dragonlord!")
+    print("Here is your challenger:\n")
     print_character(main_character)
     choose_inventory(main_character)
     print("\n")
