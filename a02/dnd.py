@@ -1,4 +1,10 @@
-# import doctest
+"""
+Duncan Keen
+A01185666
+
+Functions to create a simple DnD character and do one round of combat.
+"""
+import doctest
 import random
 from random import randint
 
@@ -142,24 +148,53 @@ def select_race():
     return race_choice
 
 
+def roll_hit_points(character):
+    """Roll to determine hit points for the character.
+
+    :param character: an incomplete character in dictionary form
+    :precondition: character must have a "Class" key
+    :postcondition: correctly modifies the character's HP
+
+    Computational Thinking:
+    Decomposition: This is a helper function to create_character to reduce the complexity of the function.
+    Pattern Matching: Since multiple classes all use the same-sided die to roll for HP, I grouped them in lists when
+        calculating the HP of the user's character.
+    """
+    if character["Class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
+        max_hp = roll_die(1, 8)
+        current_hp = max_hp
+        character["HP"] = [max_hp, current_hp]
+    elif character["Class"] in {"fighter", "ranger", "paladin"}:
+        max_hp = roll_die(1, 10)
+        current_hp = max_hp
+        character["HP"] = [max_hp, current_hp]
+    elif character["Class"] in {"sorcerer", "wizard"}:
+        max_hp = roll_die(1, 6)
+        current_hp = max_hp
+        character["HP"] = [max_hp, current_hp]
+    else:
+        max_hp = roll_die(1, 12)
+        current_hp = max_hp
+        character["HP"] = [max_hp, current_hp]
+
+
 def create_character(syllables):
     """Create a character.
 
     :param syllables: a positive non-zero integer
     :precondition: syllables must be a positive non-zero integer, or anything else to get a helpful error message
-    :postcondition: a correctly created character in
-    :return: a correctly created character in, or None if syllables was in the incorrect form
+    :postcondition: Correctly created a character in dictionary form if syllables was a positive non-zero int, else
+        printed a helpful error message and returned None
+    :return: a correctly created character in dictionary form, or None if syllables was not a positive non-zero integer
 
     Computational Thinking:
-    Decomposition: This populates an empty dictionary using several helper functions, including generate_name,
-        select_class, select_race, and roll_die
-    Pattern Matching: Since multiple classes all use the same-sided die to roll for HP, I grouped them in lists when
-        calculating the HP of the user's character.
+    Decomposition: This function populates an empty dictionary using several helper functions, including generate_name,
+        select_class, select_race, roll_die, and roll_hit_points
     Abstraction: this function works for any input of syllables.  By using if statements, the function runs if syllables
         is an integer greater than zero, or prints an error message and returns None if syllables is zero or a negative
          integer, or even if it is not an integer at all.
     """
-    try:    # create_character first tries this set of code.
+    try:    # create_character first tries this set of code. I used try/except to allow for syllables to be a string
         if int(syllables) > 0:
             inventory = []
             experience = 0
@@ -177,22 +212,8 @@ def create_character(syllables):
             character["Wisdom"] = roll_die(3, 6)
             character["Charisma"] = roll_die(3, 6)
 
-            if character["Class"] in {"monk", "bard", "druid", "cleric", "rogue", "warlock"}:
-                max_hp = roll_die(1, 8)
-                current_hp = max_hp
-                character["HP"] = [max_hp, current_hp]
-            elif character["Class"] in {"fighter", "ranger", "paladin"}:
-                max_hp = roll_die(1, 10)
-                current_hp = max_hp
-                character["HP"] = [max_hp, current_hp]
-            elif character["Class"] in {"sorcerer", "wizard"}:
-                max_hp = roll_die(1, 6)
-                current_hp = max_hp
-                character["HP"] = [max_hp, current_hp]
-            else:
-                max_hp = roll_die(1, 12)
-                current_hp = max_hp
-                character["HP"] = [max_hp, current_hp]
+            roll_hit_points(character)
+
             return character
         else:       # if syllables is a float or an integer less than or equal to zero:
             print("syllables must be a positive integer.")
@@ -455,7 +476,7 @@ def combat_round(opponent_one, opponent_two):
 def main():
     """Run the functions in this module.
     """
-    # doctest.testmod()
+    doctest.testmod()
     print("\nGreetings Traveller!\n")
     number_of_syllables = input("How many syllables is your name?")
     main_character = create_character(number_of_syllables)
@@ -475,7 +496,7 @@ def main():
     print("\nThe sounds of combat echo down the halls...\n")
     combat_round(main_character, villain)
 
-    # to loop combat the following code code be used instead of the above line:
+    # to loop combat the following code be used instead of the above line:
     # while True:
     #     i = input("Press enter to begin combat... ")
     #     if not i:
