@@ -18,10 +18,3 @@ class TestGenerateSyllable(TestCase):
         actual = generate_syllable()
         expected = "ba"
         self.assertEqual(actual, expected)
-
-
-    # @patch('random.choice', side_effect=["a"])
-    # @patch()
-    # def test_generate_syllable(self, mock_rand_choice):
-    #     actual = generate_vowel()
-    #     self.assertEqual(actual, "a")
