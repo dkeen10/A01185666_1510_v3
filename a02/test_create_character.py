@@ -48,8 +48,8 @@ class TestCreateCharacter(TestCase):
                     'Dexterity': 13, 'Constitution': 6, 'Intelligence': 8, 'Wisdom': 18, 'Charisma': 9, 'HP': [3, 3]}
         self.assertEqual(actual, expected)
 
-
-    def test_create_character_no_syllables_return_value(self):
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_create_character_no_syllables_return_value(self, mock_stdout):
         actual = create_character(0)
         expected = None
         self.assertEqual(expected, actual)

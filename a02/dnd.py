@@ -1,4 +1,4 @@
-import doctest
+# import doctest
 import random
 from random import randint
 
@@ -455,7 +455,7 @@ def combat_round(opponent_one, opponent_two):
 def main():
     """Run the functions in this module.
     """
-    doctest.testmod()
+    # doctest.testmod()
     print("\nGreetings Traveller!\n")
     number_of_syllables = input("How many syllables is your name?")
     main_character = create_character(number_of_syllables)
@@ -474,7 +474,6 @@ def main():
     print_character(villain)
     print("\nThe sounds of combat echo down the halls...\n")
     combat_round(main_character, villain)
-
 
     # to loop combat the following code code be used instead of the above line:
     # while True:
