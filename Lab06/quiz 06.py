@@ -56,6 +56,7 @@ def eratosthenes_luke(upper_bound):
 def main():
     upper_bound = 1000
     fastest_time = None
+    fastest_eratosthenes = None
 
     for eratosthenes in {eratosthenes_mike, eratosthenes_luke, eratosthenes_duncan}:
         run_time, func_name = eratosthenes(upper_bound)
