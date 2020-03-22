@@ -33,7 +33,6 @@ class TestValidateMove(TestCase):
         expected = False
         self.assertEqual(expected, actual)
 
-
     @patch('sys.stdout', new_callable=io.StringIO)
     def test_validate_move_east_at_eastern_edge(self, mock_stdout):
         mock_board = make_board()
