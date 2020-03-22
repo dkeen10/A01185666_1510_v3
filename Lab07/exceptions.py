@@ -10,15 +10,20 @@ def heron(number: int) -> float:
     :return: the square root of the number within 2 decimal places
 
     """
-    guess = abs(number)
-    while not math.isclose(guess ** 2, number, abs_tol=0.001):
-        try:
-            guess = (guess + number / guess) / 2
-        except ZeroDivisionError:
-            print("guess can't be zero!")
-            return -1
-    print(guess)
-    return guess
+    if number < -1:
+        raise ValueError
+    elif number == 0 or number == -1:
+        raise ValueError
+    else:
+        guess = abs(number)
+        while not math.isclose(guess ** 2, number, abs_tol=0.001):
+            try:
+                guess = (guess + number / guess) / 2
+            except ZeroDivisionError:
+                print("guess can't be zero!")
+                return -1
+        print(guess)
+        return guess
 
 
 def find_an_even(input_list: list) -> int:
