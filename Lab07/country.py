@@ -44,11 +44,9 @@ class Country:
         >>> print(canada)
         Canada has a population of 37590000 and is 9985000 square kilometres.
         >>> canada
-        <lab07_country.Country object at 0xaba7f255030b>
+        Country("Canada", 37_590_000, 9_985_000)
         >>> [canada]
-        [<lab07_country.Country object at 0xaba7f255030b>]
-        >>> print([canada])
-        [<lab07_country.Country object at 0xaba7f255030b>]
+        [Country("Canada", 37_590_000, 9_985_000)]
         """
         # return f"{self.name} has a population of {self.population} and is {self.area} square kilometres."
         return '' + self.name + ' has a population of ' + str(self.population) + ' and is ' + str(self.area) + ' square kilometres.'

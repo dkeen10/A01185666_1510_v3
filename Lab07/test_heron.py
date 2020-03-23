@@ -1,11 +1,15 @@
 from unittest import TestCase
+from unittest.mock import patch
+import io
+
 from exceptions import heron
 
-class Test(TestCase):
+
+class TestHeron(TestCase):
     def test_heron_97(self):
         test_number = 97
-        actual = heron(97)
-        expected = 9.84890052084378
+        actual = heron(test_number)
+        expected = 9.85
         self.assertEqual(actual, expected)
 
     def test_heron_9(self):
@@ -17,17 +21,21 @@ class Test(TestCase):
     def test_heron_0(self):
         test_number = 0
         actual = heron(test_number)
-        expected = ValueError
+        expected = 0.00
         self.assertEqual(actual, expected)
 
-    def test_heron_negative_one(self):
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_heron_negative_one(self, mock_stdout):
         test_number = -1
         actual = heron(test_number)
-        expected = ValueError
+        expected = -1
         self.assertEqual(actual, expected)
+        self.assertRaises(ZeroDivisionError)
 
-    def test_heron_negative_nine(self):
-        test_number = -9
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_heron_negative_ninety_seven(self, mock_stdout):
+        test_number = -97
         actual = heron(test_number)
-        expected = ValueError
+        expected = -1
         self.assertEqual(actual, expected)
+        self.assertRaises(ZeroDivisionError)
