@@ -50,6 +50,7 @@ class TestCountry(TestCase):
     # expected = """COuntry(Canada, """
     # actual = mock.stdout
     #
-    # def test__init__empty_name():
-    #     with self.AssertRaises(ValueError):
+    def test__init__empty_name(self):
+        with self.AssertRaises(ValueError):
+            Country("", 1000, 100)
 

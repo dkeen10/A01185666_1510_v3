@@ -21,7 +21,7 @@ class TestHeron(TestCase):
     def test_heron_0(self):
         test_number = 0
         actual = heron(test_number)
-        expected = 0.00
+        expected = 0
         self.assertEqual(actual, expected)
 
     @patch("sys.stdout", new_callable=io.StringIO)
