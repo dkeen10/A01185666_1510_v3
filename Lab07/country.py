@@ -8,7 +8,7 @@ class Country:
         :param name: a string
         :param population: an integer
         :param area: an integer
-        :precondition: name must a string, population and area must be integers
+        :precondition: name must a string; population and area must be integers
         :postcondition: a country has been initialized
         :Raise ValueError: if name is empty
         :Raise ValueError: if populations is negative
@@ -34,8 +34,8 @@ class Country:
 
         :param country2: a country
         :precondition: country2 must be a well formed country
-        :postcondition: correctly returns True if country is greater than country2, else False.
-        :return: True if country is greater than country2, else False.
+        :postcondition: correctly returns True if area of country is greater than country2, else False.
+        :return: True if area of country is greater than country2, else False.
 
         >>> canada = Country("Canada", 37_590_000, 9_985_000)
         >>> denmark = Country("Denmark", 5_603_000, 42_933)
@@ -62,7 +62,8 @@ class Country:
     def __str__(self) -> str:
         """Print a string of the country.
 
-        :Postcondition: a string of the country has been printed.
+        :postcondition: a string of the country has been printed
+
         >>> canada = Country("Canada", 37_590_000, 9_985_000)
         >>> print(canada)
         Canada has a population of 37590000 and is 9985000 square kilometres.

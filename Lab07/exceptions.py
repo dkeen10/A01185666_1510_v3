@@ -7,7 +7,7 @@ def heron(number: int) -> float:
 
     :param number: an integer
     :precondition: number must be an integer
-    :postcondition: successfully finds the square root of the number to within 2 decimal places.
+    :postcondition: successfully finds the square root of the number to within 2 decimal places
     :raise zeroDivisionError: if number is a negative integer
     :return: the square root of the number within 2 decimal places
 

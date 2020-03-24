@@ -77,3 +77,11 @@ was: 512
 """
         actual = mock_stdout.getvalue()
         self.assertEqual(actual, expected)
+
+    @patch("sys.stdout", new_callable=io.StringIO)
+    def test_top_ten_words_empty_doc(self, mock_stdout):
+        test_file = "test_empty.txt"
+        top_ten_words(test_file)
+        expected = """"""
+        actual = mock_stdout.getvalue()
+        self.assertEqual(actual, expected)

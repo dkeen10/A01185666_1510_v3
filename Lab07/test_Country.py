@@ -37,20 +37,27 @@ class TestCountry(TestCase):
         actual = self.test_country.__repr__()
         self.assertEqual(expected, actual)
 
-    # this works too
     def test___repr___list(self):
         expected = ['Country("Canada", 37590000, 9985000)']
         actual = [self.test_country.__repr__()]
         self.assertEqual(expected, actual)
 
-    # # this is what blake did
-    # @patch ("sys.stdout", new_callable = io.stringIO)
-    # def test__repr__(self):
-    # print(self.test_country)
-    # expected = """COuntry(Canada, """
-    # actual = mock.stdout
-    #
     def test__init__empty_name(self):
-        with self.AssertRaises(ValueError):
+        with self.assertRaises(ValueError):
             Country("", 1000, 100)
 
+    def test__init__negative_pop(self):
+        with self.assertRaises(ValueError):
+            Country("Canada", -1000, 100)
+
+    def test__init__zero_pop(self):
+        with self.assertRaises(ValueError):
+            Country("Canada", 0, 100)
+
+    def test__init__negative_area(self):
+        with self.assertRaises(ValueError):
+            Country("Canada", 1000, -100)
+
+    def test__init__zero_area(self):
+        with self.assertRaises(ValueError):
+            Country("Canada", 1000, 0)
