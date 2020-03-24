@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 
-class Test(TestCase):
+class TestTopTenWords(TestCase):
     def test_top_ten_words(self):
         self.fail()
+
