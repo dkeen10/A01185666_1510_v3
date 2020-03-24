@@ -31,9 +31,11 @@ class Country:
             raise ValueError("area must be an integer greater than zero")
 
     def is_larger(self, country2) -> bool:
-        """
+        """Determine if the specified country is larger than another specified country.
+
         :precondition: country2 must be a well formed country
-        :return: true is coutnry is greater than country2, else false.
+        :poscondition: correctly returns True if country is greater than country2, else False.
+        :return: True if country is greater than country2, else False.
         >>> canada = Country("Canada", 37_590_000, 9_985_000)
         >>> denmark = Country("Denmark", 5_603_000, 42_933)
         >>> canada.is_larger(denmark)
@@ -44,7 +46,10 @@ class Country:
         return self.area > country2.area
 
     def population_density(self) -> float:
-        """
+        """Find the population density of the specified country.
+
+        :postcondition: returns the correct the population density of the specified country
+        :return: the population density of the specified country
         >>> canada = Country("Canada", 37_590_000, 9_985_000)
         >>> canada.population_density()
         3.7646469704556833
@@ -61,7 +66,7 @@ class Country:
         return f"{self.name} has a population of {self.population} and is {self.area} square kilometres."
 
     def __repr__(self):
-        # """Rep
+        """Rep
         #
         # :postcondition: correctly returns the represenation of the country
         # :return: the representation of the country

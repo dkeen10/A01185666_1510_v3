@@ -17,11 +17,11 @@ class TestFindAnEven(TestCase):
         self.assertEqual(actual, expected)
 
     def test_find_an_even_no_evens(self):
-        test_list = [1, 3, 5]
-        find_an_even(test_list)
-        self.assertRaises(ValueError, msg="There were no evens input list")
+        with self.assertRaises(ValueError, msg="There were no evens input list"):
+            test_list = [1, 3, 5]
+            find_an_even(test_list)
 
     def test_find_an_even_empty_list(self):
-        test_list = []
-        find_an_even(test_list)
-        self.assertRaises(ValueError, msg="There were no evens input list")
+        with self.assertRaises(ValueError, msg="There were no evens input list"):
+            test_list = []
+            find_an_even(test_list)
