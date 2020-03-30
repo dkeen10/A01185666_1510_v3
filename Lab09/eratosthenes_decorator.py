@@ -17,10 +17,7 @@ def timer(func):
         end_time = time.perf_counter()
         run_time = end_time - start_time
         print(f"Finished {func.__name__!r} in {run_time:.4f} secs")
-        file_name = "results.txt"
-        with open(file_name) as file_object:
-            file_object.write(f"{func.__name__} took {run_time} seconds")
-        # return run_time, func.__name__
+        return run_time, func.__name__
     return wrapper_timer
 
 
