@@ -51,8 +51,8 @@ def main():
 
     new_ingredient = input("Enter food item to add, or 'q' to exit: ")
     while new_ingredient != "q":
-        new_item_calories = int(input("Enter calories for " + new_ingredient + ": "))
-        ingredient_list[new_ingredient] = new_item_calories
+        new_ingredient_calories = int(input(f"Enter calories for {new_ingredient}:"))
+        ingredient_list[new_ingredient] = new_ingredient_calories
         print_ingredients(ingredient_list)
         calorie_sum = sum_of_calories(ingredient_list)
         print_calories(calorie_sum, average_calories(calorie_sum, ingredient_list))

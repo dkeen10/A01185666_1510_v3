@@ -41,18 +41,26 @@ def factorial_recursive_helper(num):
         return num * factorial_recursive_helper(num - 1)
 
 
+def compare_time(iterative_total_time, recursive_total_time):
+    file_name = "results.txt"
+    with open(file_name, "a") as file_object:
+        file_object.write(f"""factorial_iterative took {iterative_total_time} seconds in total.
+factorial_recursive took {recursive_total_time} seconds in total.\n""")
+        if iterative_total_time < recursive_total_time:
+            file_object.write(f"Faster method was factorial_iterative")
+        else:
+            file_object.write(f"faster method was factorial_recursive")
+
+
 def main():
     iterative_total_time = 0
     recursive_total_time = 0
+
     for num in range(1, 101):
         iterative_total_time += factorial_iterative(num)
         recursive_total_time += factorial_recursive(num)
-    print(f"factorial_iterative took {iterative_total_time} seconds in total")
-    print(f"factorial_recursive took {recursive_total_time} seconds in total")
-    if iterative_total_time < recursive_total_time:
-        print(f"Faster method was factorial_iterative")
-    else:
-        print(f"faster method was factorial_recursive")
+
+    compare_time(iterative_total_time, recursive_total_time)
 
 
 if __name__ == "__main__":
