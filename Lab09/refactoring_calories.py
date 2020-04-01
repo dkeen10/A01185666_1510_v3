@@ -1,45 +1,50 @@
-"""
-refactoring_calories.py
+def sum_of_calories(ingredient_list: dict) -> int:
+    """Sum the calories of the ingredients in ingredient list.
 
-This program initializes a dictionary, and then repeatedly prompts the user
-for new food items and their associated calories. The new items are added
-to the dictionary. Each time an item is added, the list of foods is printed
-along with total and average calories.
-
-The program works as is, and contains no bugs.
-
-Unfortunately this program is just written as one big script, and is not very
-well organized. It needs to use Functions like we have discussed in class, a
-proper command loop, and unit tests to prove everything works.
-
-Your tasks:
-
-1. Refactor this program so that it is composed of short, atomic, and
-   re-usable functions
-2. Add a suite of unit tests that prove everything works as it should.
-"""
-
-
-def sum_of_calories(ingredient_list):
+    :param ingredient_list: a dictionary of ingredient:calories key value pairs
+    :precondition: ingredient list must be a dictionary of ingredient:calories key value pairs
+    :postcondition: the sum of the calories has been correctly calculated
+    :return: the sum of the calories of the ingredients in ingredient_list
+    """
     total_calories = 0
     for ingredient in ingredient_list:
         total_calories += ingredient_list[ingredient]
     return total_calories
 
 
-def average_calories(total_calories, ingredient_list):
+def average_calories(total_calories: int, ingredient_list: dict) -> float:
+    """Average calories of the ingredients in ingredient list.
+
+    :param total_calories: an integer representing the total calories of the ingredients in ingredient_list
+    :param ingredient_list: a dictionary of ingredient:calories key value pairs
+    :precondition: total calories must be correctly calculated and ingredient_list must be a well-formed dictionary
+    :return: the average calories of the ingredients in ingredient_list
+    """
     avg_calories = total_calories / len(ingredient_list)
     return avg_calories
 
 
-def print_ingredients(ingredient_list):
+def print_ingredients(ingredient_list: dict):
+    """Print the ingredients in ingredient list.
+
+    :param ingredient_list: a dictionary of ingredient:calories key value pairs
+    :precondition: ingredient list must be a dictionary of ingredient:calories key value pairs
+    :postcondition: the ingredients in ingredient_list have been successfully printed
+    """
     ingredient_names = []
     for ingredient in ingredient_list:
         ingredient_names.append(ingredient)
     print("\nIngredients:", sorted(ingredient_names))
 
 
-def print_calories(total_calories, avg_calories):
+def print_calories(total_calories: int, avg_calories: float):
+    """Print the total and average calories of the ingredients in ingredient_list.
+
+    :param total_calories: an integer representing the total calories of the ingredients in ingredient_list
+    :param avg_calories: a float representing the average calories of the ingredients in ingredient_list
+    :precondition: total_calories and avg_calories have been accurately calculated
+    :postcondition: total_calories and avg_calories have been printed for the user
+    """
     print("Total Calories:", total_calories,
           "Average Calories: %0.1f\n" % avg_calories)
 
