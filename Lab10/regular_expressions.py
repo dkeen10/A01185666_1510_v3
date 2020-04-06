@@ -10,14 +10,12 @@ def is_email(address: str) -> bool:
 
     """
     email_regex = re.compile(r"(^[\w]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$)")
-    email_regex = re.compile(r"(^[\w]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$)")
     match_object = email_regex.search(address)
-    if match_object:
-        print(f"the email address you entered is {match_object.group()}")
-        return True
-    else:
-        print("that is not a valid email address")
-        return False
+    # if match_object:
+    #     return True
+    # else:
+    #     return False
+    return True if match_object else False
 
 
 def is_nakamoto(name: str) -> bool:
@@ -30,12 +28,13 @@ def is_nakamoto(name: str) -> bool:
     """
     name_regex = re.compile(r"^([A-Z][a-z]*)+ Nakamoto$")
     match_object = name_regex.search(name)
-    if match_object:
-        # print(f"the Nakamoto name you entered is {match_object.group()}")
-        return True
-    else:
-        # print("that is not a Nakamoto name")
-        return False
+    # if match_object:
+    #     # print(f"the Nakamoto name you entered is {match_object.group()}")
+    #     return True
+    # else:
+    #     # print("that is not a Nakamoto name")
+    #     return False
+    return True if match_object else False
 
 
 def is_poker(hand: str) -> bool:
@@ -49,26 +48,20 @@ def is_poker(hand: str) -> bool:
     card_regex = re.compile(r"^[2-9tjqka]{5}$", re.I)
     match_object = card_regex.search(hand)
     if match_object:
-        # hand_regex = re.compile(r"^[.]$")
-        # match_object = hand_regex.search(hand)
-        # if not match_object:
-        #     print(f"the hand you entered is {match_object.group()}")
-        #     return True
-        # else:
-        #     print("that is not a valid hand")
-        #     return False
-        print(f"hand you entered is {match_object.group()}")
+        hand_regex = re.compile(r"^(.)\1{4,}$")
+        match_object = hand_regex.search(hand)
+        if not match_object:
+            return True
+        else:
+            return False
     else:
-        print("that is not a valid hand")
         return False
-# findall, counter, if counter = 5: false
 
 
 def main():
-
     address = "duncankeen@gmail.com"
     name = "Henry nakamoto"
-    hand = "atk3j"
+    hand = "ajk23"
     is_email(address)
     is_nakamoto(name)
     is_poker(hand)
