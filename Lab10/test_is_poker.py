@@ -68,3 +68,9 @@ class Test(TestCase):
         expected = False
         actual = is_poker(test_hand)
         self.assertEqual(expected, actual)
+
+    def test_is_poker_case_insenstivity(self):
+        test_hand = "aAaA2"
+        expected = True
+        actual = is_poker(test_hand)
+        self.assertEqual(expected, actual)
