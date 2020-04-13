@@ -1,7 +1,3 @@
-"""
-Nasa API:gdYrt7eHWAQM9itM3O0IQCtDq71pF03AlkebavWF
-ex. https://api.nasa.gov/planetary/apod?api_key=gdYrt7eHWAQM9itM3O0IQCtDq71pF03AlkebavWF
-"""
 import requests
 import json
 
@@ -36,7 +32,6 @@ def get_weather(url: str) -> dict:
     response.raise_for_status()
     vancouver_weather = json.loads(response.text)
     weather_list = vancouver_weather["list"]
-    print(vancouver_weather)
     return weather_list
 
 
@@ -49,7 +44,7 @@ def print_weather(weather_list: dict, user_input: int):
     :postcondition: the weather conditions over the specified timeframe.
     """
     degree_sign = u"\N{DEGREE SIGN}"
-    for i in range(0, user_input*9):
+    for i in range(0, user_input*8):
         print(f"the weather at {weather_list[i]['dt_txt']} is:")
         print(weather_list[i]['weather'][0]['main'], '-', weather_list[i]['weather'][0]['description'])
         print(f"{weather_list[i]['main']['temp']}{degree_sign}C, feels like {weather_list[i]['main']['feels_like']}{degree_sign}C")
