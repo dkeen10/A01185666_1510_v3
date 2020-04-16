@@ -5,8 +5,9 @@ import json
 def get_input() -> int:
     """Get User Input.
 
+    :postcondition: Correctly returns user_input if user has entered input between 1 and 7, else zero
     :raise ValueError: if userInput is less than 1 or greater than 7
-    :postcondition: User has successfully entered input between 1 and 7
+    :return: user input if value is between 1 and 7, else zero
     """
     try:
         user_input = int(input("How many days to forecast?"))
