@@ -94,7 +94,7 @@ def is_poker(hand: str) -> bool:
     >>> is_poker("aa2233")
     False
     """
-    card_regex = re.compile(r"^[2-9tjqka]{5}$", re.I)
+    card_regex = re.compile(r"^[2-9tjqka]{5}$", re.I)   # re.I to be case insensitive
     match_object = card_regex.search(hand)
     if match_object:
         hand_regex = re.compile(r"^(.)\1{4,}$")

@@ -20,9 +20,11 @@ def sparse_add(vector_one: dict, vector_two: dict) -> dict:
     >>> sparse_add({'length': 1}, {'length': 1})
     {'length': 1}
     """
+    # to handle if vector_one does not have the same length as vector_two, or if both are zero length
     if vector_one['length'] != vector_two['length'] | (vector_one['length'] == 0 and vector_two['length'] == 0):
         return None
 
+    # sparse addition logic:
     else:
         combined_vector = {}
         for key, value in vector_one.items():
@@ -56,9 +58,11 @@ def sparse_dot_product(vector_one: dict, vector_two: dict) -> int:
     >>> sparse_dot_product({'length':1}, {'length':1})
     0
     """
+    # to handle if vector_one does not have the same length as vector_two, or if both are zero length
     if vector_one['length'] != vector_two['length'] | (vector_one['length'] == 0 and vector_two['length'] == 0):
         return None
 
+    # sparse dot product logic:
     else:
         dot_product = 0
         for key in vector_one.keys():

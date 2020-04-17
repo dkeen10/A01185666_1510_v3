@@ -9,6 +9,7 @@ def timer(func):
         end_time = time.perf_counter()
         run_time = end_time - start_time
         file_name = "results.txt"
+        # to write function run time to a file:
         with open(file_name, "a") as file_object:
             file_object.write(f"For {args[0]}, {func.__name__} took {run_time} seconds\n")
         return run_time

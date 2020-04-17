@@ -95,7 +95,7 @@ def validate_move(board: dict, character: dict, direction: str) -> bool:
         print("Direction must be N, E, S, or W.")
         return False
     # the below is taking the character's location and moving it in the indicated direction, then checking if the result
-    # is in the coordinate dictionary
+    # is in the coordinate dictionary:
     if direction == "N" and (tuple(map(sum, zip(character["Location"], (-1, 0)))) not in board.keys()):
         print("You are at the northern edge of the maze! Enter a different direction.")
         return False

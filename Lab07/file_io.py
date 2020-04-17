@@ -25,10 +25,10 @@ def count_words(file_name: str) -> typing.Counter[str]:
     :return: a count of how many times each word is in the specified text file
     """
     current_file = read_file(file_name)
-    words = current_file.lower().strip().split()
-    word_list = str.maketrans('', '', string.punctuation)
-    stripped_list = [word.translate(word_list) for word in words]
-    word_count = Counter(stripped_list)
+    words = current_file.lower().strip().split()    # removing capitalization and whitespace and splitting into list
+    word_list = str.maketrans('', '', string.punctuation)   # maketrans turns all punctuation into nothing
+    stripped_list = [word.translate(word_list) for word in words]   # list comp to make a copy of the translated words
+    word_count = Counter(stripped_list)     # Counter module counts the occurrences
     return word_count
 
 
@@ -40,7 +40,7 @@ def top_ten_words(file_name: str):
     :postcondition: correctly displays the top 10 most common words in the specified text file
     """
     top_n_words = 10
-    top_10_word_dic = count_words(file_name).most_common(top_n_words)
+    top_10_word_dic = count_words(file_name).most_common(top_n_words)  # most_common method from collections
     for key, value in top_10_word_dic:
         print(f"{key}: {value}")
 

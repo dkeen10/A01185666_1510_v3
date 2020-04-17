@@ -18,6 +18,7 @@ def heron(number: int) -> float:
     >>> heron (9)
     3.0
     """
+    # arbitrary guess to start things off:
     guess = number
     while not math.isclose(guess ** 2, number, abs_tol=0.000001):
         try:
